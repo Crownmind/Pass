@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marvel Themed Curator Login</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            background: url('12.png') no-repeat center center fixed;
+            background-size: 390px;
+            font-family: 'Komika Axis', sans-serif;
+            text-align: center;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 48px;
+            color: #FF1E00; /* Heroic Red */
+        }
+        label {
+            display: block;
+            font-size: 18px;
+            margin: 10px 0;
+            color: #FFDD00; /* Heroic Yellow */
+        }
+        input {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #FF1E00; /* Heroic Red */
+            border-radius: 5px;
+        }
+        button {
+            background: #0B3D91; /* Heroic Blue */
+            color: #FFFFFF;
+            font-size: 18px;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .error-message {
+            color: #FF1E00;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Curator Login</h1>
+        <label for="roll">Your Roll:</label>
+        <input type="text" id="roll" placeholder="Enter your roll number">
+        <label for="password">Your Password:</label>
+        <input type="password" id="password" placeholder="Enter your password">
+        <button onclick="validate()">Login</button>
+        <div id="error" class="error-message"></div>
+    </div>
+
+    <script>
+        // Complete roll number sets and passwords for Set 1
+        const set1 = {
+            "101": "123456", "102": "234567", "103": "345678", "104": "456789", "105": "567890",101": "123456", "102": "234567", "103": "345678", "104": "456789", "105": "567890",
+            "106": "678901", "107": "789012", "108": "890123", "109": "901234", "110": "123789",
+            "111": "234890", "112": "345901", "113": "456012", "114": "567123", "115": "678234",
+            "116": "789345", "117": "890456", "118": "901567", "119": "123890", "120": "234901",
+            "121": "345012", "122": "456123", "123": "567234", "124": "678345", "125": "789456",
+            "126": "890567", "127": "901678", "128": "123901", "129": "234012", "130": "345123",
+            "131": "456234", "132": "567345", "133": "678456", "134": "789567", "135": "890678",
+            "136": "901789", "137": "123012", "138": "234123", "139": "345234", "140": "456345",
+            "141": "567456", "142": "678567", "143": "789678", "144": "890789", "145": "901890",
+            "146": "123234", "147": "234345", "148": "345456", "149": "456567", "150": "567678"
+              }     // Add more rolls and passwords as needed...
+            "150": "567678"
+        };
+
+        // Complete roll number sets and passwords for Set 2
+        const set2 = {
+            "701": "876543", "702": "987654", "703": "123123", "704": "234234", "705": "345345",706": "456456", "707": "567567", "708": "678678", "709": "789789", "710": "890890",
+            "711": "901901", "712": "012012", "713": "123345", "714": "234456", "715": "345567",
+            "716": "456678", "717": "567789", "718": "678890", "719": "789901", "720": "890012",
+            "721": "901123", "722": "012234", "723": "123456", "724": "234567", "725": "345678",
+            "726": "456789", "727": "567890", "728": "678901", "729": "789012", "730": "890123",
+            "731": "901234", "732": "012345", "733": "123567", "734": "234678", "735": "345789",
+            "736": "456890", "737": "567901", "738": "678012", "739": "789123", "740": "890234",
+            "741": "901345", "742": "012456", "743": "123678", "744": "234789", "745": "345890",
+            "746": "456901", "747": "567012", "748": "678123", "749": "789234", "750": "890345"
+            // Add more rolls and passwords as needed...
+            "750": "890345"
+        };
+
+        // Complete roll number sets and passwords for Set 3
+        const set3 = {
+            "901": "654321", "902": "543210", "903": "432109", "904": "321098", "905": "210987","906": "109876", "907": "098765", "908": "987654", "909": "876543", "910": "765432",
+            "911": "654321", "912": "543210", "913": "432109", "914": "321098", "915": "210987",
+            "916": "109876", "917": "098765", "918": "987654", "919": "876543", "920": "765432",
+            "921": "654321", "922": "543210", "923": "432109", "924": "321098", "925": "210987",
+            "926": "109876", "927": "098765", "928": "987654", "929": "876543", "930": "765432",
+            "931": "654321", "932": "543210", "933": "432109", "934": "321098", "935": "210987",
+            "936": "109876", "937": "098765", "938": "987654", "939": "876543", "940": "765432",
+            "941": "654321", "942": "543210", "943": "432109", "944": "321098", "945": "210987",
+            "946": "109876", "947": "098765", "948": "987654", "949": "876543", "950": "765432"
+            // Add more rolls and passwords as needed...
+            "950": "765432"
+        };
+
+        // Complete roll number sets and passwords for Set 4
+        const set4 = {
+            "401": "098765", "402": "876321", "403": "234321", "404": "321234", "405": "567890",406": "678901", "407": "789012", "408": "890123", "409": "901234", "410": "123345",
+            "411": "234456", "412": "345567", "413": "456678", "414": "567789", "415": "678890",
+            "416": "789901", "417": "890012", "418": "901123", "419": "012234", "420": "123456",
+            "421": "234567", "422": "345678", "423": "456789", "424": "567890", "425": "678901",
+            "426": "789012", "427": "890123", "428": "901234", "429": "012345", "430": "123567",
+            "431": "234678", "432": "345789", "433": "456890", "434": "567901", "435": "678012",
+            "436": "789123", "437": "890234", "438": "901345", "439": "012456", "440": "123678",
+            "441": "234789", "442": "345890", "443": "456901", "444": "567012", "445": "678123",
+            "446": "789234", "447": "890345", "448": "901456",
+            // Add more rolls and passwords as needed...
+            "450": "789234"
+        };
+
+        function validate() {
+            const roll = document.getElementById('roll').value;
+            const password = document.getElementById('password').value;
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = ""; // Clear previous error message
+
+            let redirectUrl = "";
+
+            // Check roll number and password against each set
+            if (set1[roll] && set1[roll] === password) {
+                redirectUrl = "x.com"; // Redirect for Set 1
+            } else if (set2[roll] && set2[roll] === password) {
+                redirectUrl = "y.com"; // Redirect for Set 2
+            } else if (set3[roll] && set3[roll] === password) {
+                redirectUrl = "z.com"; // Redirect for Set 3
+            } else if (set4[roll] && set4[roll] === password) {
+                redirectUrl = "m.com"; // Redirect for Set 4
+            }
+
+            // Handle redirection
+            if (redirectUrl) {
+                window.location.href = redirectUrl; // Redirect to the appropriate site
+            } else {
+                errorDiv.textContent = "Ask the Curator for your roll and password."; // Display error
+            }
+        }
+    </script>
+</body>
+</html>
